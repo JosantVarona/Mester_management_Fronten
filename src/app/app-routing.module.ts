@@ -2,7 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './start/register/register.component';
 import { LoginComponent } from './start/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
+import { MainComponent } from './page/main/main.component';
+import { HeaderComponent } from './header/header.component';
+import { ProfileComponent } from './page/profile/profile.component';
+import { MyactivityComponent } from './page/myactivity/myactivity.component';
+import { WorkersComponent } from './page/workers/workers.component';
+import { CenterComponent } from './page/center/center.component';
+import { ActivityComponent } from './page/activity/activity.component';
 
 const routes: Routes = [
 
@@ -20,7 +26,16 @@ const routes: Routes = [
 },
 {
   path: 'home',
-  component: HomeComponent
+  component: HeaderComponent,
+  children:[
+    {path: '' , component: MainComponent},
+    {path: 'main' , component: MainComponent},
+    {path: 'perfil' , component: ProfileComponent},
+    {path: 'myactivity' , component: MyactivityComponent},
+    {path: 'workers' , component: WorkersComponent},
+    {path: 'center_client', component:CenterComponent},
+    {path: 'center_activity', component:ActivityComponent}
+  ]
 }
   
 ];

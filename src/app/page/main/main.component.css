@@ -1,0 +1,34 @@
+/* Tabla */
+table {
+  font-size: 0.95rem;
+}
+
+thead th {
+  border-bottom: 2px solid #333;
+}
+
+.badge {
+  font-weight: 600;
+  padding: 0.5em 0.75em;
+  font-size: 0.9rem;
+}
+
+.btn-info {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.btn-info:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}

@@ -1,0 +1,60 @@
+<div class="container perfil-container">
+    <div class="titulo text-center">Perfil del Usuario</div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-end mb-4 gap-2">
+      <button class="btn btn-primary">Guardar Cambios</button>
+      <button class="btn btn-secondary">Cancelar</button>
+      <button class="btn btn-warning">Modificar</button>
+    </div>
+
+    <!-- Datos del Usuario -->
+    <form>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="nombre" class="form-label">Nombre:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="nombre" value="Juan Pérez">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="dni" class="form-label">DNI:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="dni" value="12345678A">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="telefono" class="form-label">Teléfono:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="tel" class="form-control" id="telefono" value="+34 600 123 456">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="correo" class="form-label">Correo:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="email" class="form-control" id="correo" value="juan@example.com">
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col-md-4"><label class="form-label">Rol:</label></div>
+      <div class="col-md-8">
+        <select class="form-select" formControlName="rol">
+          <option>Admin</option>
+          <option>Tecnico</option>
+          <option>Cliente</option>
+        </select>
+      </div>
+    </div>
+    </form>
+  </div>
