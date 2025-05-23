@@ -1,0 +1,61 @@
+<div class="container-fluid mt-5">
+    <button class="btn btn-secondary btn-back" onclick="window.history.back()">← Volver</button>
+    
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+            <!-- Tarjeta con información -->
+            <div class="card-custom mb-4 p-4 text-center">
+                <h2 class="mb-3">Nombre del Local</h2>
+                <p><strong>Ubicación:</strong> Dirección del local</p>
+                <p><strong>Calle:</strong> Nombre de la calle</p>
+                <p><strong>Teléfono:</strong> 123-456-789</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Actividades -->
+    <h3 class="text-center mb-3">Actividades</h3>
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-md-6 d-flex">
+            <input type="text" class="form-control me-2" placeholder="Buscar actividad...">
+            <button class="btn btn-primary">Añadir</button>
+        </div>
+    </div>
+
+    <!-- Tabla de actividades -->
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ejemplo 1</td>
+                    <td>Deporte</td>
+                    <td>2025-06-15</td>
+                    <td>Activo</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Editar</button>
+                        <button class="btn btn-danger btn-sm">Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ejemplo 2</td>
+                    <td>Cultural</td>
+                    <td>2025-07-20</td>
+                    <td>Inactivo</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Editar</button>
+                        <button class="btn btn-danger btn-sm">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
