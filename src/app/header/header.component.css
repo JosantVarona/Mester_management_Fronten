@@ -1,7 +1,7 @@
 
 .sidenav-container {
   height: 100vh;
-  
+  background: linear-gradient(135deg, #000000 0%, #4b4b4b 100%);
 }
 
 .sidenav {
@@ -48,6 +48,6 @@ mat-icon {
   padding: 16px;
 }
 a.active {
-  color: #5ddae3; /* azul angular */
+  color: #d1e0e1; /* azul angular */
   font-weight: bold;
 }

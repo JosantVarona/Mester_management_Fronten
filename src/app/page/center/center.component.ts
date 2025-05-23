@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-center',
@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: './center.component.html',
   styleUrl: './center.component.css'
 })
-export class CenterComponent {
+export class CenterComponent implements OnInit {
+
+  ngOnInit(): void {
+    
+  }
 
 }
