@@ -1,37 +1,39 @@
 <div class="center-screen">
-<form class="form">
+<form [formGroup]="form"  class="form">
     <p class="title">Register </p>
     <p class="message">Registrate ahora y obtén acceso completo a nuestra aplicación. </p>
         <div class="flex">
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" formControlName="name"  name="name" placeholder="" required="">
             <span>Nombre</span>
         </label>
 
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" formControlName="lastname" name="lastname" placeholder="" required="">
             <span>Apellido</span>
         </label>
     </div>  
-            
     <label>
-        <input class="input" type="email" placeholder="" required="">
+        <input class="input" type="text" formControlName="dni" placeholder="" name="dni" required="">
+        <span>DNI</span>
+    </label>
+
+    <label>
+        <input class="input" type="email" formControlName="email" placeholder="" name="email" required="">
         <span>Email</span>
     </label> 
     <label>
-        <input class="input" type="text" placeholder="" required="">
+        <input class="input" type="text" formControlName="telephone" placeholder="" name="telephone" required="">
         <span>Nº de telefono</span>
     </label> 
+   
         
     <label>
-        <input class="input" type="password" placeholder="" required="">
+        <input class="input" type="password" formControlName="pass" placeholder="" name="pass" required="">
         <span>Constaseña</span>
     </label>
-    <label>
-        <input class="input" type="password" placeholder="" required="">
-        <span>Confirmar Contraseña</span>
-    </label>
-    <button class="submit" routerLink="/home">Registrar</button>
+    <!-- routerLink="/home" -->
+    <button class="submit"(click)="ngSubmit()" >Registrar</button>
     <p class="signin">Ya tengo cuenta <a routerLink="/login">Iniciar sesion</a> </p>
 </form>
 </div>

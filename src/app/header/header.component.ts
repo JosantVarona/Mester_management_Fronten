@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +8,21 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-
+export class HeaderComponent implements OnInit {
+  user!: User;
   sidenavOpened = false;
   constructor(
     private router : Router
   ){
+    const user = localStorage.getItem('User');
+    if(user !== null){
+      this.user = JSON.parse(user);
+    }else{
+      console.log('no hay usuario')
+    }
+  }
+  ngOnInit(): void {
+    
   }
   
   toggleSidenav() {

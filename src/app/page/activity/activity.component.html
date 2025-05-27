@@ -3,12 +3,11 @@
     
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-4">
-            <!-- Tarjeta con información -->
             <div class="card-custom mb-4 p-4 text-center">
-                <h2 class="mb-3">Nombre del Local</h2>
-                <p><strong>Ubicación:</strong> Dirección del local</p>
-                <p><strong>Calle:</strong> Nombre de la calle</p>
-                <p><strong>Teléfono:</strong> 123-456-789</p>
+                <h2 class="mb-3">{{client.name}}</h2>
+                <p><strong>Ubicación:</strong> {{center.location}}</p>
+                <p><strong>Calle:</strong> {{center.address}}</p>
+                <p><strong>Teléfono:</strong> {{center.telephone}}</p>
             </div>
         </div>
     </div>
@@ -35,21 +34,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Ejemplo 1</td>
-                    <td>Deporte</td>
-                    <td>2025-06-15</td>
-                    <td>Activo</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Editar</button>
-                        <button class="btn btn-danger btn-sm">Eliminar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Ejemplo 2</td>
-                    <td>Cultural</td>
-                    <td>2025-07-20</td>
-                    <td>Inactivo</td>
+                <tr *ngFor="let acti of activity">
+                    <td>{{acti.name}}</td>
+                    <td>{{acti.type}}</td>
+                    <td>{{acti.fecha_acti}}</td>
+                    <td>{{acti.state}}</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Editar</button>
                         <button class="btn btn-danger btn-sm">Eliminar</button>

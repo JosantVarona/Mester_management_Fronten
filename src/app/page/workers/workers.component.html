@@ -25,13 +25,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Jose Antonio</td>
-          <td>A12345678</td>
-          <td><div>correo&#64;ejemplo.com</div>
-  <div class="text-muted small">123456789</div></td>
-          <td><span class="badge bg-success">Activo</span></td>
-          <td>Tecnico</td>
+        <tr *ngFor="let user of users;">
+          <td>{{user.name}}</td>
+          <td>{{user.dni}}</td>
+          <td><div>{{user.email}}</div>
+  <div class="text-muted small">{{user.telephone}}</div></td>
+          <td><span class="badge bg-success">{{user.state}}</span></td>
+          <td>{{user.level}}</td>
           <td>
             <button class="btn btn-sm btn-info me-2">Editar</button>
             <button class="btn btn-sm btn-danger">Eliminar</button>

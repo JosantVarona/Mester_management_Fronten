@@ -33,7 +33,7 @@
           <td>{{ client.email }}</td>
           <td><span class="badge bg-success">Activo</span></td>
           <td>
-            <button class="btn btn-sm btn-info me-2" routerLink="/home/center_client">Acceder</button>
+            <button class="btn btn-sm btn-info me-2" (click)="btnClient(client)">Acceder</button>
             <button class="btn btn-sm btn-danger">Eliminar</button>
           </td>
         </tr>

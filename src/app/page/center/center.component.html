@@ -2,8 +2,9 @@
   <div class="card p-4">
     <!-- Header -->
     <div class="mb-4 header-info">
-      <h2 class="fw-bold">Juan Pérez</h2>
-      <p class="text-muted">juan.perez&#64;example.com</p>
+      <h2 class="fw-bold">{{ client.name }}</h2>
+      <p class="text-muted">{{ client.email }}</p>
+
     </div>
 
     <!-- Search and Add -->
@@ -12,7 +13,9 @@
         <input type="text" class="form-control" placeholder="Buscar...">
       </div>
       <div class="col-sm-3 col-12">
-        <button class="btn btn-primary w-100">Añadir</button>
+        <button class="btn btn-primary" (click)="showModal = true">Añadir</button>
+
+        <app-addcenter *ngIf="showModal" [id_client]="client.id" (onClose)="showModal = false"></app-addcenter>
       </div>
     </div>
 
@@ -30,14 +33,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Av. Reforma</td>
-            <td>01010</td>
-            <td>Ciudad de México</td>
-            <td>555-123-4567</td>
+          <tr *ngFor="let center of centers">
+            <td>{{center.address}}</td>
+            <td>{{center.zipCode}}</td>
+            <td>{{center.location}}</td>
+            <td>{{center.telephone}}</td>
             <td><span class="badge bg-danger text-white">Archivado</span></td>
             <td>
-              <button class="btn btn-sm btn-success me-1" routerLink="/home/center_activity">Acceder</button>
+              <button class="btn btn-sm btn-success me-1" (click)="btnAccederCenter(center)">Acceder</button>
               <button class="btn btn-sm btn-danger">Eliminar</button>
             </td>
           </tr>

@@ -19,10 +19,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Freidora De Aire</td>
-          <td>Instalacion</td>
-          <td><span class="badge bg-success">Pendiente</span></td>
+        <tr *ngFor="let activity of activis">
+          <td>{{activity.name}}</td>
+          <td>{{activity.type}}</td>
+          <td><span class="badge bg-success">{{activity.state}}</span></td>
           <td>
             <button class="btn btn-sm btn-info me-2">Accerder</button>
           </td>

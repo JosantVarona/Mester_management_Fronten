@@ -1,9 +1,11 @@
+import { Client } from "./clients";
 
 export interface Center{
     id:number;
-    zip_code: string;
+    zipCode: string;
     location: string;
-    adderss: string;
-    telefono: string;
+    address: string;
+    telephone: string;
+    client: Client;
     archive: number;
 }

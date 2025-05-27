@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../model/clients';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -11,14 +12,15 @@ import { ApiSpringbootService } from '../../service/api-springboot.service';
 export class MainComponent implements OnInit {
 
   clients: Client [] = [];
+  showModal = false;
 
   constructor(
-    private apiserve: ApiSpringbootService
+    private apiserve: ApiSpringbootService,
+    private router: Router
   ){
 
   }
-
-  showModal = false;
+  
   ngOnInit(): void {
     this.getAllclients();
   }
@@ -26,5 +28,9 @@ export class MainComponent implements OnInit {
     this.apiserve.getAllClients().subscribe(
       data =>{this.clients = data}
     )
+  }
+  btnClient(client: Client){
+    localStorage.setItem('Client', JSON.stringify(client));
+    this.router.navigate(['/home/center_client']);
   }
 }
