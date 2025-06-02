@@ -11,6 +11,7 @@ import { Center } from '../../../model/center';
 })
 export class AddcenterComponent implements OnInit {
   @Output() onClose = new EventEmitter<void>();
+  @Input() updatecenter: Center | null = null;
   @Input() id_client!: number;
   form!: FormGroup;
 
@@ -27,7 +28,17 @@ export class AddcenterComponent implements OnInit {
       telephone: new FormControl(''),
       zipCode: new FormControl(''),
       address: new FormControl('')
-    })
+    });
+    if (this.updatecenter) {
+      this.form.patchValue({
+        location: this.updatecenter.location,
+        telephone: this.updatecenter.telephone,
+        zipCode: this.updatecenter.zipCode,
+        address: this.updatecenter.address
+      });
+    }else{
+    this.form.reset();
+  }
   }
 
   close() {
@@ -53,7 +64,8 @@ export class AddcenterComponent implements OnInit {
     return;
   }
   const dataCenter = this.form.value;
-  this.apiservice.addCenter(this.id_client, dataCenter).subscribe({
+  if (this.updatecenter == null) {
+    this.apiservice.addCenter(this.id_client, dataCenter).subscribe({
     next: (response) => {
       console.log('Centro guardado:', response);
       window.location.reload();
@@ -63,5 +75,18 @@ export class AddcenterComponent implements OnInit {
       console.error('Error al guardar Centro:', err);
     }
   });
+  }else{
+    this.apiservice.updateCenter(this.updatecenter.id, dataCenter).subscribe({
+      next: (response) => {
+        console.log('Centro actualizado:', response);
+        window.location.reload();
+        this.close(); 
+      },
+      error: (err) => {
+        console.error('Error al actualizar Centro:', err);
+      }
+    });
+  }
+  
   }
 }

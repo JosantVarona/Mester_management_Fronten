@@ -1,1 +1,24 @@
-<p>addactivity works!</p>
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal-content">
+  <form [formGroup]="form" (ngSubmit)="saveClient()">
+    <div class="form-group">
+      <label for="name">Nombre:</label>
+      <input id="name" type="text" formControlName="name" placeholder="Introduce el nombre" />
+    </div>
+
+    <div class="row">
+      <div class="col-md-4"><label class="form-label">Tipo de actividad:</label></div>
+      <div class="col-md-8">
+        <select class="form-select" formControlName="type">
+          <option>Instalación</option>
+          <option>Reparación</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="close()">Cancelar</button>
+    </div>
+  </form>
+</div>

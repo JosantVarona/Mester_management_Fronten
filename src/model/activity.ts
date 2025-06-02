@@ -1,10 +1,13 @@
+import { User } from "./user";
+
 export interface Activity {
-    id : number;
+    id? : number;
+    id_user? : User;
     name: string;
     type: string;
-    specifics: string;
-    picture: string;
-    fecha_acti: Date;
-    archive: number;
-    state: String;
+    specifics? : string;
+    picture? : string;
+    fecha_acti?: string;
+    archive? : number;
+    state? : String;
 }

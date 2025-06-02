@@ -6,5 +6,5 @@ export interface User{
     telephone: string;
     level?: number;
     state?: string;
-    pass: string;
+    pass?: string;
 }

@@ -9,6 +9,7 @@ import { MyactivityComponent } from './page/myactivity/myactivity.component';
 import { WorkersComponent } from './page/workers/workers.component';
 import { CenterComponent } from './page/center/center.component';
 import { ActivityComponent } from './page/activity/activity.component';
+import { AuthGuard } from './service/auth.guard';
 
 const routes: Routes = [
 
@@ -27,6 +28,7 @@ const routes: Routes = [
 {
   path: 'home',
   component: HeaderComponent,
+  canActivate: [AuthGuard],
   children:[
     {path: '' , component: MainComponent},
     {path: 'main' , component: MainComponent},

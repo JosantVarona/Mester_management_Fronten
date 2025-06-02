@@ -32,8 +32,13 @@ export class HeaderComponent implements OnInit {
   this.sidenavOpened = false;
 }
 
-    get isInHomeOrMain(): boolean {
+  get isInHomeOrMain(): boolean {
     return this.router.url === '/home' || this.router.url === '/home/main';
   }
+  logout() {
+    localStorage.removeItem('User');
+    this.router.navigate(['/login']);
+  }
+
   
 }

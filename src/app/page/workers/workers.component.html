@@ -31,10 +31,14 @@
           <td><div>{{user.email}}</div>
   <div class="text-muted small">{{user.telephone}}</div></td>
           <td><span class="badge bg-success">{{user.state}}</span></td>
-          <td>{{user.level}}</td>
+          <td>{{ user.level === 3 ? 'Admin' : user.level === 1 ? 'Técnico' : 'Otro' }}</td>
           <td>
-            <button class="btn btn-sm btn-info me-2">Editar</button>
-            <button class="btn btn-sm btn-danger">Eliminar</button>
+            <button class="btn btn-sm btn-info me-2" (click)="btnUpdateUser(user)">Editar</button>
+            <app-adduser *ngIf="showModal" [updateuser]="userupdate" (onClose)="handleClose()"></app-adduser>
+
+            <button class="btn btn-sm btn-warning me-2" *ngIf="user.state == 'Desabilitado'" (click)="btnUserDisable(user)">Habilitar</button>
+            <button class="btn btn-sm btn-secondary me-2" *ngIf="user.state == 'Habilitado'" (click)="btnUserDisable(user)">Desabilitar</button>
+            <button class="btn btn-sm btn-danger"*ngIf="user.state == 'Desabilitado'">Eliminar</button>
           </td>
         </tr>
         

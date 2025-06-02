@@ -1,1 +1,62 @@
-<p>adduser works!</p>
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal-content">
+    <div class="titulo text-center">Perfil del Usuario</div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-end mb-4 gap-2">
+      <button class="btn btn-primary" (click)="updateUser()">Guardar Cambios</button>
+      <button class="btn btn-secondary" (click)="close()">Cancelar</button>
+      <button class="btn btn-warning" (click)="habilitarEdicion()">Modificar</button>
+    </div>
+
+    
+    <form [formGroup]="formuser">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="nombre" class="form-label">Nombre:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="nombre" formControlName="name">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="dni" class="form-label">DNI:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="dni" formControlName="dni">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="telefono" class="form-label">Teléfono:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="tel" class="form-control" id="telefono" formControlName="telephone">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="correo" class="form-label">Correo:</label>
+        </div>
+        <div class="col-md-8">
+          <input type="email" class="form-control" id="correo" formControlName="email">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <label class="form-label">Rol:</label>
+        </div>
+        <div class="col-md-8">
+          <select class="form-select" formControlName="level">
+            <option [value]="3">Admin</option>
+            <option [value]="1">Tecnico</option>
+          </select>
+        </div>
+      </div>
+    </form>
+</div> 

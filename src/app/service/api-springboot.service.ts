@@ -4,6 +4,7 @@ import { map } from 'rxjs';
 import { Client } from '../../model/clients';
 import { User } from '../../model/user';
 import { Center } from '../../model/center';
+import { Activity } from '../../model/activity';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class ApiSpringbootService {
 
 
   constructor(private http: HttpClient) { }
+
+  //#region CLIENTES
 
   //Obtenemos todos los clientes
   public getAllClients(){
@@ -35,6 +38,21 @@ export class ApiSpringbootService {
   public addClient(client: Client){
     return this.http.post<any>(`${this.URL}/client`, client);
   }
+  // Metodo para actualizar cliente
+  public updateClient(id: number, client: Client) {
+    return this.http.put<any>(`${this.URL}/client/update_client/${id}`, client);
+  }
+  // Metodo para archivar cliente
+  public archiveClient(id: number, state:number) {
+    return this.http.put<any>(`${this.URL}/client/archive/${id}/${state}`, null);
+  }
+
+  // Metodo para eliminar cliente
+  public deleteClient(id: number) {
+    return this.http.delete<any>(`${this.URL}/client/delete/${id}`);
+  }
+  //#endregion CLIENTES
+  //#region CENTER
 
   // Metodo para añadir centro 
   public addCenter(id_client:number, center:Center){
@@ -48,6 +66,21 @@ export class ApiSpringbootService {
       return data;
     }));
   }
+  // Metodo para archivar centro
+  public archiveCenter(id: number, state:number) {
+    return this.http.put<any>(`${this.URL}/center/archive/${id}/${state}`, null);
+  }
+  // Metodo para Actualizar Centro
+  public updateCenter(id: number, center: Center) {
+    return this.http.put<any>(`${this.URL}/center/update_center/${id}`, center);
+  }
+  // Metodo para eliminar centro
+  public deleteCenter(id: number) {
+    return this.http.delete<any>(`${this.URL}/center/delete/${id}`);
+  }
+
+  //#endregion CENTER
+  //#region USER
 
   // Metodo para registrar usuario
   public regisUser(user: User){
@@ -75,5 +108,38 @@ export class ApiSpringbootService {
       return data;
     }));
   }
-  
+  // Metodo para actualizar un usuario
+  public UpdateUser(id: number, user: User) {
+    return this.http.put<any>(`${this.URL}/user/update_user/${id}`, user);
+  }
+  public Userstate(id: number, state: String) {
+    return this.http.put<any>(`${this.URL}/user/state_user/${id}/${state}`, null);
+  }
+
+  //#endregion USER
+  //#region ACTIVIDAD
+
+  // Metodo para insertar Actividad
+  public addActivity(id_center: number, id_user: number, activity: Activity){
+    return this.http.post<any>(`${this.URL}/center/${id_center}/${id_user}/activity`, activity);
+  }
+  // Metodo para Actualizar Actividad
+  public updateActivity(id: number, activity: Activity) {
+    return this.http.put<any>(`${this.URL}/activity/update_activity/${id}`, activity);
+  }
+  // Metodo para archivar Actividad
+  public archiveActivity(id: number, state:number) {
+    return this.http.put<any>(`${this.URL}/activity/archive/${id}/${state}`, null);
+  }
+  // Metodo para Eliminar Actividad
+  public deleteActivity(id: number) {
+    return this.http.delete<any>(`${this.URL}/activity/delete/${id}`);
+  }
+
+  //Metodo para actualizar el estado de la actividad
+  public updateStateActivity(id: number, state: String) {
+    return this.http.put<any>(`${this.URL}/activity/update_state/${id}/${state}`, null);
+  }
+
+  //#endregion ACTIVIDAD
 }
