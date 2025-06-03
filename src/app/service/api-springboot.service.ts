@@ -141,5 +141,18 @@ export class ApiSpringbootService {
     return this.http.put<any>(`${this.URL}/activity/update_state/${id}/${state}`, null);
   }
 
+  // Metodo para Obtener todo la información de la actividad
+  public getAllinfoActivity(id: number) {
+    return this.http.get<any>(`${this.URL}/activity/info_activity/${id}`)
+    .pipe(map(data => {
+      return data;
+    }));
+  }
+
+  //Metodo para actiualizar la imagen y especificaciones de la actividad
+  public updateImageActivity(id: number, activity: Activity) {
+    return this.http.put<any>(`${this.URL}/activity/complit/${id}`, activity);
+  }
+
   //#endregion ACTIVIDAD
 }

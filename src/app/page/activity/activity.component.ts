@@ -4,6 +4,7 @@ import { Client } from '../../../model/clients';
 import { Center } from '../../../model/center';
 import { Activity } from '../../../model/activity';
 import { User } from '../../../model/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity',
@@ -20,7 +21,8 @@ export class ActivityComponent implements OnInit {
   showModal = false;
 
   constructor(
-  private apiserve: ApiSpringbootService
+  private apiserve: ApiSpringbootService,
+  private router: Router
   ){
     const userm = localStorage.getItem('User');
     const clientm = localStorage.getItem('Client');
@@ -88,6 +90,7 @@ export class ActivityComponent implements OnInit {
     });
   }
 
+  // Metodo para actualizar el estado de la actividad
   btnUpdateState(activity :Activity, update?:number) {
     switch (activity.state) {
       case 'Pendiente':
@@ -137,5 +140,10 @@ export class ActivityComponent implements OnInit {
           });
       break;
     }
+  }
+  
+  // Metodo para accerder a la actividad
+  btnActivity(activity: Activity) {
+    this.router.navigate(['/home/info_activity', activity.id]);
   }
 }

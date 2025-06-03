@@ -42,7 +42,7 @@
                     <td>{{acti.fecha_acti}}</td>
                     <td>{{acti.state}}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm me-2">Acceder</button>
+                        <button class="btn btn-primary btn-sm me-2" (click)="btnActivity(acti)">Acceder</button>
                         <!-- Aqui tendremos que mandarlo a fomulario de actividades -->
                         <button class="btn btn-sm btn-warning me-2" (click)="btnUpdateActivity(acti)">Editar</button>
 

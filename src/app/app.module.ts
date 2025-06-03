@@ -22,6 +22,7 @@ import { CenterComponent } from './page/center/center.component';
 import { ActivityComponent } from './page/activity/activity.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { InfoActivityComponent } from './page/info-activity/info-activity.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AdduserComponent,
     CenterComponent,
     ActivityComponent,
+    InfoActivityComponent,
   ],
   imports: [
     BrowserModule,
