@@ -1,5 +1,5 @@
 <div class="container-fluid mt-5">
-    <button class="btn btn-secondary btn-back" onclick="window.history.back()">← Volver</button>
+    <button class="btn btn-secondary btn-back" (click)="back()">← Volver</button>
     
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-4">
@@ -20,6 +20,7 @@
             <button class="btn btn-primary" (click)="showModal = true">Añadir</button>
 
              <app-addactivity *ngIf="showModal" [id_center]="center.id" [updateactivity]="updateactivity"  (onClose)="handleClose()"></app-addactivity>
+             <app-reassing *ngIf="showModalReassing" [ReassingActivity]="updateactivity"  (onClose)="handleClose()"></app-reassing>
         </div>
     </div>
 
@@ -40,21 +41,19 @@
                     <td>{{acti.name}}</td>
                     <td>{{acti.type}}</td>
                     <td>{{acti.fecha_acti}}</td>
-                    <td>{{acti.state}}</td>
+                    <td>{{acti.state}}<span class="badge bg-danger text-white"  *ngIf="acti.archive == 1"> Archivado</span> </td>
                     <td>
-                        <button class="btn btn-primary btn-sm me-2" (click)="btnActivity(acti)">Acceder</button>
+                        <button class="btn btn-sm btn-warning me-2" *ngIf="user.level == 3" (click)="btnUpdateActivity(acti)">Editar</button>
                         <!-- Aqui tendremos que mandarlo a fomulario de actividades -->
-                        <button class="btn btn-sm btn-warning me-2" (click)="btnUpdateActivity(acti)">Editar</button>
+                        <button class="btn btn-primary btn-sm me-2" *ngIf="acti.state == 'Finalizada' && acti.archive == 0" (click)="btnShowActivity(acti)">Ver</button>
 
-                        <button class="btn btn-sm btn-success me-2" *ngIf="acti.state == 'Pendiente' || acti.state == 'Finalizada'" (click)="btnUpdateState(acti)">En Curso</button>
-                        <button class="btn btn-sm btn-success me-2" *ngIf="acti.state == 'En curso'" (click)="btnUpdateState(acti, 0)">Pendiente</button>
-                        <button class="btn btn-sm btn-success me-2" *ngIf="acti.state == 'En curso'" (click)="btnUpdateState(acti, 1)">Finalizado</button>
+                        <button class="btn btn-sm btn-primary  me-2" *ngIf="user.level == 3" (click)="btnReassingActivity(acti)">Reasignar</button>
 
                         <!-- Para arcivar y desarchivar actividades -->
-                        <button class="btn btn-sm btn-secondary me-2" *ngIf="acti.archive == 0" (click)="archiveActivity(acti)">Archivar</button>
-                        <button class="btn btn-sm btn-secondary me-2" *ngIf="acti.archive == 1" (click)="archiveActivity(acti)">Desarchivar</button>
+                        <button class="btn btn-sm btn-secondary me-2" *ngIf="acti.archive == 0 && user.level == 3" (click)="archiveActivity(acti)">Archivar</button>
+                        <button class="btn btn-sm btn-secondary me-2" *ngIf="acti.archive == 1 && user.level == 3" (click)="archiveActivity(acti)">Desarchivar</button>
 
-                        <button class="btn btn-sm btn-danger" *ngIf="acti.archive == 1" (click)="deleteActivity(acti)">Eliminar</button>
+                        <button class="btn btn-sm btn-danger" *ngIf="acti.archive == 1 && user.level == 3" (click)="deleteActivity(acti)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>

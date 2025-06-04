@@ -153,6 +153,9 @@ export class ApiSpringbootService {
   public updateImageActivity(id: number, activity: Activity) {
     return this.http.put<any>(`${this.URL}/activity/complit/${id}`, activity);
   }
+  public reassingActivity(id: number, id_user: number) {
+    return this.http.put<any>(`${this.URL}/activity/reassign/${id}/${id_user}`, null);
+  }
 
   //#endregion ACTIVIDAD
 }

@@ -1,0 +1,26 @@
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal-content">
+  <div class="mb-4 text-center">
+    <input type="text" class="form-control mb-2 w-75 mx-auto" placeholder="Buscar usuario...">
+    <button class="btn btn-primary me-2" (click)="reassingActivity()" [disabled]="!selectedUser">Añadir</button>
+    <button class="btn btn-secondary " (click)="close()">Cerrar</button>
+  </div>
+        <table class="user-table table table-striped text-center">
+            <thead>
+                <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                <td>{{ user.name }}</td>
+                <td>{{ user.state }}</td>
+                <td>
+                    <input type="radio" name="selectedUser" [value]="user.id" (change)="selectUser(user)">
+                </td>
+                </tr>
+            </tbody>
+        </table>
+</div>

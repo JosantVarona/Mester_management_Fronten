@@ -19,6 +19,7 @@ export class ActivityComponent implements OnInit {
   activity: Activity [] = [];
   updateactivity: Activity | null = null;
   showModal = false;
+  showModalReassing = false;
 
   constructor(
   private apiserve: ApiSpringbootService,
@@ -57,10 +58,17 @@ export class ActivityComponent implements OnInit {
     this.updateactivity = activity;    
     this.showModal = true;             
   }
+  
+  // Metodo para abrir modal para reasignar actividad
+  btnReassingActivity(activity: Activity) {
+    this.updateactivity = activity;
+    this.showModalReassing = true;     
+  }
 
   // Método para cerrar el modal y limpiar la variable de update
     handleClose() {
     this.showModal = false;
+    this.showModalReassing = false;
     this.updateactivity = null;
   }
   
@@ -90,60 +98,11 @@ export class ActivityComponent implements OnInit {
     });
   }
 
-  // Metodo para actualizar el estado de la actividad
-  btnUpdateState(activity :Activity, update?:number) {
-    switch (activity.state) {
-      case 'Pendiente':
-        this.apiserve.updateStateActivity(activity.id!, 'En curso').subscribe({
-          next: (response) => {
-            console.log('Estado actualizado a En Proceso:', response);
-            this.getActivitybyCenter(this.center.id); 
-          },
-          error: (error) => {
-            console.error('Error al actualizar el estado:', error);
-          }
-        });
-      break;
-      case 'En curso':
-        if (update == 1) {
-          this.apiserve.updateStateActivity(activity.id!, 'Finalizada').subscribe({
-            next: (response) => {
-              console.log('Estado actualizado a Finalizada:', response);
-              this.getActivitybyCenter(this.center.id); 
-            },
-            error: (error) => {
-              console.error('Error al actualizar el estado:', error);
-            }
-          });
-        }
-        if (update == 0) {
-          this.apiserve.updateStateActivity(activity.id!, 'Pendiente').subscribe({
-            next: (response) => {
-              console.log('Estado actualizado a Pendiente:', response);
-              this.getActivitybyCenter(this.center.id); 
-            },
-            error: (error) => {
-              console.error('Error al actualizar el estado:', error);
-            }
-          });
-        }
-      break;
-      case 'Finalizada':
-          this.apiserve.updateStateActivity(activity.id!, 'En curso').subscribe({
-            next: (response) => {
-              console.log('Estado actualizado a Pendiente:', response);
-              this.getActivitybyCenter(this.center.id); 
-            },
-            error: (error) => {
-              console.error('Error al actualizar el estado:', error);
-            }
-          });
-      break;
-    }
+  back(){
+    this.router.navigate(['/home/center_client']);
   }
-  
   // Metodo para accerder a la actividad
-  btnActivity(activity: Activity) {
-    this.router.navigate(['/home/info_activity', activity.id]);
+  btnShowActivity(activity: Activity) {
+    this.router.navigate(['/home/show_activity', activity.id]);
   }
 }

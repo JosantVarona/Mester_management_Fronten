@@ -11,6 +11,7 @@ import { CenterComponent } from './page/center/center.component';
 import { ActivityComponent } from './page/activity/activity.component';
 import { AuthGuard } from './service/auth.guard';
 import { InfoActivityComponent } from './page/info-activity/info-activity.component';
+import { VerActivityComponent } from './page/ver-activity/ver-activity.component';
 
 const routes: Routes = [
 
@@ -38,7 +39,8 @@ const routes: Routes = [
     {path: 'workers' , component: WorkersComponent},
     {path: 'center_client', component:CenterComponent},
     {path: 'center_activity', component:ActivityComponent},
-    {path: 'info_activity/:id', component:InfoActivityComponent}
+    {path: 'info_activity/:id', component:InfoActivityComponent},
+    {path: 'show_activity/:id', component:VerActivityComponent}
   ]
 }
   

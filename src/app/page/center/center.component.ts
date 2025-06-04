@@ -92,4 +92,8 @@ export class CenterComponent implements OnInit {
       }
     );
   }
+  // Metodo para volver a la pagina anterior
+    back(){
+    this.router.navigate(['/home/main']);
+  }
 }

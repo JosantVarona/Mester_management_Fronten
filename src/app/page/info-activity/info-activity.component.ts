@@ -49,10 +49,7 @@ export class InfoActivityComponent implements OnInit {
       }, 1500);
     });
   }
-  // Metodo para volver a la pagina de actividades del centro
-  back() {
-    this.router2.navigate(['/home/center_activity']);
-  }
+
   previewImage(event: any) {
     const file = event.target.files[0];
 

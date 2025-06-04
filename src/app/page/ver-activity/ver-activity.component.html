@@ -35,49 +35,74 @@
     </ul>
   </div><span>Loading</span></div>
 </div>
-<div *ngIf="!loading_info">
-    <div class="info-container">
-  <h2>Detalles de la Actividad</h2>
-  
-  <div class="info-card">
-    <p><strong>Cliente:</strong> {{ info_activity.nombre_cliente }}</p>
-    <p><strong>Ubicación:</strong> {{ info_activity.ubicacion }}</p>
-    <p><strong>Dirección:</strong> {{ info_activity.direccion }}</p>
-    <p><strong>Encargado:</strong> {{ info_activity.nombre_usuario }}</p>
-    <p><strong>Nombre de Actividad:</strong> {{ info_activity.nombre_actividad }}</p>
-    <p><strong>Fecha:</strong> {{ info_activity.fecha_actividad }}</p>
-    <p><strong>Tipo:</strong> {{ info_activity.tipo }}</p>
+ <button type="button" class="btn btn-secondary" onclick="window.history.back()">← Volver</button>
+<div *ngIf="!loading_info && info_activity" class="container  p-4 rounded shadow-sm mb-4 bg-white">
+   
+  <!-- Tabla con 4 columnas -->
+  <div class="row">
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Cliente:</strong>
+      <div>{{ info_activity.nombre_cliente }}</div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Localidad:</strong>
+      <div>{{ info_activity.ubicacion }}</div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Dirección:</strong>
+      <div>{{ info_activity.direccion }}</div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Encargado</strong>
+      <div>{{ info_activity.nombre_usuario }}</div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Nombre de la actividad:</strong>
+      <div>{{ info_activity.nombre_actividad }}</div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Fecha:</strong>
+      <div>{{ info_activity.fecha_actividad }}</div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-3">
+      <strong>Tipo:</strong>
+      <div>{{ info_activity.tipo }}</div>
+    </div>
   </div>
 
-  <h3>Editar Información</h3>
-  <div class="btn-container">
-    <button type="submit" class="btn btn-primary" (click)="guardarCambios()">Guardar cambios</button>
-    <button type="button" class="btn btn-danger" onclick="window.history.back()">Cancelar</button>
+  <!-- Especificaciones -->
+  <div class="card my-4">
+    <div class="card-header">
+      Especificaciones
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ info_activity.especificaciones }}</p>
+    </div>
   </div>
-  <form [formGroup]="form" >
-    <label for="especificaciones">Especificaciones:</label>
-    <textarea id="especificaciones" formControlName="especificaciones" maxlength="255"></textarea>
 
-    <label for="imagen">Imagen:</label>
-    <input type="file" id="imagen"  name="imagen" (change)="previewImage($event)">
-<!-- Imagen cargada desde input -->
-<img
-  *ngIf="imagePreview"
-  [src]="imagePreview"
-  alt="Vista previa"
-  class="image-preview"
-/>
+  <!-- Imagen con botón para ampliar -->
+  <div class="text-center my-4">
+    <img
+      [src]="info_activity.imagen"
+      alt="Imagen"
+      class="img-thumbnail"
+      style="max-width: 300px; cursor: pointer;"
+      (click)="abrirImagen()"
+    />
+  </div>
 
-<!-- Imagen desde el backend (si no hay preview del input) -->
-<img
-  *ngIf="!imagePreview && info_activity?.imagen"
-  [src]="info_activity.imagen"
-  alt="Imagen de la actividad"
-  class="image-preview"
-/>
-
-
-
-  </form>
-</div>
+  <!-- Modal personalizado Angular -->
+  <div
+    class="custom-modal"
+    *ngIf="verImagen"
+    (click)="cerrarImagen()"
+  >
+    <div class="modal-content-centrado">
+      <img
+        [src]="info_activity.imagen"
+        alt="Imagen ampliada"
+        class="img-fluid"
+      />
+    </div>
+  </div>
 </div>

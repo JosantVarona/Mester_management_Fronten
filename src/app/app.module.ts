@@ -23,6 +23,8 @@ import { ActivityComponent } from './page/activity/activity.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { InfoActivityComponent } from './page/info-activity/info-activity.component';
+import { VerActivityComponent } from './page/ver-activity/ver-activity.component';
+import { ReassingComponent } from './modal/reassing/reassing.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { InfoActivityComponent } from './page/info-activity/info-activity.compon
     CenterComponent,
     ActivityComponent,
     InfoActivityComponent,
+    VerActivityComponent,
+    ReassingComponent,
   ],
   imports: [
     BrowserModule,

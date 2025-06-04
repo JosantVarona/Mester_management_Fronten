@@ -9,6 +9,10 @@
 
   <!-- Tabla a ancho completo -->
   <div class="table-responsive shadow rounded">
+    <app-addactivity *ngIf="showModal" [id_center]="0" [updateactivity]="updateactivity"  (onClose)="handleClose()"></app-addactivity>
+
+    <app-reassing *ngIf="showReassing" [ReassingActivity]="updateactivity"  (onClose)="handleClose()"></app-reassing>
+
     <table class="table table-striped table-hover align-middle w-100">
       <thead class="table-dark">
         <tr>
@@ -22,9 +26,19 @@
         <tr *ngFor="let activity of activis">
           <td>{{activity.name}}</td>
           <td>{{activity.type}}</td>
-          <td><span class="badge bg-success">{{activity.state}}</span></td>
+          <td><span class="badge bg-success">{{activity.state}}</span> <span class="badge bg-danger text-white"  *ngIf="activity.archive == 1"> Archivado</span></td>
           <td>
-            <button class="btn btn-sm btn-info me-2">Accerder</button>
+            <button class="btn btn-primary btn-sm me-2" (click)="btnActivity(activity)">Acceder</button>
+            <button class="btn btn-sm btn-primary  me-2" *ngIf="user.level == 3" (click)="btnReassingActivity(activity)">Reasignar</button>
+            <button class="btn btn-sm btn-warning me-2"  (click)="btnUpdateActivity(activity)">Editar</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'Pendiente' || activity.state == 'Finalizada'" (click)="btnUpdateState(activity)">En Curso</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'" (click)="btnUpdateState(activity, 0)">Pendiente</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'" (click)="btnUpdateState(activity, 1)">Finalizado</button>
+            <button class="btn btn-sm btn-secondary me-2" *ngIf="activity.archive == 0" (click)="archiveActivity(activity)">Archivar</button>
+            <button class="btn btn-sm btn-secondary me-2" *ngIf="activity.archive == 1" (click)="archiveActivity(activity)">Desarchivar</button>
+            <button class="btn btn-sm btn-danger" *ngIf="activity.archive == 1 && user.level == 3" (click)="deleteActivity(activity)">Eliminar</button>
+            
+            
           </td>
         </tr>
         
