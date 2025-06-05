@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh; /* Ocupa toda la pantalla */
-  background-color: #f4f4f4;
+  background: linear-gradient(135deg, #000000 0%, #4b4b4b 100%);
 }
 
 .form {

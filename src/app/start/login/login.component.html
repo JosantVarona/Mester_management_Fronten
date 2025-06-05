@@ -1,18 +1,18 @@
 <div class="center-screen">
-<form class="form">
-    <p class="title">Login </p>
+<form class="form" [formGroup]="form">
+    <p class="title" >Login </p>
     <p class="message">Inicia sesion ahora y obtén acceso completo a nuestra aplicación. </p>
             
     <label>
-        <input class="input" type="email" placeholder="" required="">
+        <input class="input" type="email" formControlName="email" placeholder="" required>
         <span>Email</span>
     </label> 
         
     <label>
-        <input class="input" type="password" placeholder="" required="">
+        <input class="input" type="password" formControlName="pass" placeholder="" required>
         <span>Constaseña</span>
     </label>
-    <button class="submit" routerLink="/home">Iniciar</button>
+    <button class="submit" (click)="loginUser()">Iniciar</button>
     <p class="signin">No tengo cuenta <a routerLink="/register">registrate</a> </p>
 </form>
 </div>

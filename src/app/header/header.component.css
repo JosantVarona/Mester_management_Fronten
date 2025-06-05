@@ -1,11 +1,12 @@
 
 .sidenav-container {
   height: 100vh;
-  
+  background: linear-gradient(135deg, #000000 0%, #4b4b4b 100%);
 }
 
 .sidenav {
   width: 220px;
+  border-right: 0;
 }
 
 .mat-toolbar {
@@ -22,12 +23,14 @@ mat-icon {
 .custom-nav{
     background-color: black;
     height: 100%;
+  
+  
 }
 
 .custom-nav a {
   display: flex;
-  align-items: center;       /* Alinea verticalmente el texto e icono */
-  justify-content: space-between; /* Empuja el icono completamente a la derecha */
+  align-items: center; 
+  justify-content: space-between; 
   padding: 12px 16px;
   color: white;
   text-decoration: none;
@@ -48,6 +51,6 @@ mat-icon {
   padding: 16px;
 }
 a.active {
-  color: #5ddae3; /* azul angular */
+  color: #d1e0e1; /* azul angular */
   font-weight: bold;
 }

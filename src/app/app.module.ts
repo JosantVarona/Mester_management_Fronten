@@ -21,6 +21,10 @@ import { AdduserComponent } from './modal/adduser/adduser.component';
 import { CenterComponent } from './page/center/center.component';
 import { ActivityComponent } from './page/activity/activity.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { InfoActivityComponent } from './page/info-activity/info-activity.component';
+import { VerActivityComponent } from './page/ver-activity/ver-activity.component';
+import { ReassingComponent } from './modal/reassing/reassing.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AdduserComponent,
     CenterComponent,
     ActivityComponent,
+    InfoActivityComponent,
+    VerActivityComponent,
+    ReassingComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +55,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration(withEventReplay())

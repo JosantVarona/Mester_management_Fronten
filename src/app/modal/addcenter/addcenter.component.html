@@ -1,1 +1,28 @@
-<p>addcenter works!</p>
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal-content">
+  <form [formGroup]="form" (ngSubmit)="saveCenter()">
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input id="location" type="text" formControlName="location" placeholder="Introduce El municipio" />
+    </div>
+     <div class="form-group">
+      <label for="telephone">Nº de Telefono</label>
+      <input id="telephone" type="text" formControlName="telephone" placeholder="Introduce numero de encargado del cliente" />
+    </div>
+
+    <div class="form-group">
+      <label for="zipCode">Codigo postal:</label>
+      <input id="zipCode" type="text" formControlName="zipCode" placeholder="Introduce el codigo postal" />
+    </div>
+
+    <div class="form-group">
+      <label for="address">Calle o domicio:</label>
+      <input id="address" type="text" formControlName="address" placeholder="Introduce el email" />
+    </div>
+
+    <div class="button-group">
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="close()">Cancelar</button>
+    </div>
+  </form>
+</div>

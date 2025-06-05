@@ -13,7 +13,7 @@
 
     </div>
   </div>
-  <h2 class="fw-bold">Clientes</h2>
+  <h2 class="fw-bold" style="color: white;">Clientes</h2>
   <!-- Tabla a ancho completo -->
   <div class="table-responsive shadow rounded">
     <table class="table table-striped table-hover align-middle w-100">
@@ -21,21 +21,29 @@
         <tr>
           <th>Nombre</th>
           <th>CIF</th>
-          <th>Estado</th>
+          <th>Correo empresa</th>
+          <th *ngIf="user.level == 3">Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Empresa A</td>
-          <td>A12345678</td>
-          <td><span class="badge bg-success">Activo</span></td>
+        <tr *ngFor="let client of clients; let i = index;">
+          <td>{{ client.name }}</td>
+          <td>{{ client.cif }}</td>
+          <td>{{ client.email }}</td>
+          <td><span *ngIf="client.archive == 0">No archivado</span>
+            <span *ngIf="client.archive == 1">Archivado</span>
+          </td>
           <td>
-            <button class="btn btn-sm btn-info me-2" routerLink="/home/center_client">Acceder</button>
-            <button class="btn btn-sm btn-danger">Eliminar</button>
+            <button class="btn btn-sm btn-info me-2" (click)="btnClient(client)">Acceder</button>
+            <button class="btn btn-sm btn-warning me-2" (click)="btnEditClient(client)">Editar</button>
+            <app-addclient *ngIf="showModal" [updateclient]="updateclient" (onClose)="handleClose()"></app-addclient>
+            
+            <button class="btn btn-sm btn-success me-2" *ngIf="client.archive == 0" (click)="btnArchivarClient(client)">Archivar</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="client.archive == 1" (click)="btnArchivarClient(client)">Desarchivar</button>
+            <button class="btn btn-sm btn-danger" *ngIf="user.level == 3 && client.archive == 1" (click)="btnDeleteClient(client)">Eliminar</button>
           </td>
         </tr>
-        
       </tbody>
     </table>
   </div>

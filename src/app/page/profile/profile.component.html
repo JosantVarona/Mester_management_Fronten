@@ -3,19 +3,19 @@
 
     <!-- Botones -->
     <div class="d-flex justify-content-end mb-4 gap-2">
-      <button class="btn btn-primary">Guardar Cambios</button>
-      <button class="btn btn-secondary">Cancelar</button>
-      <button class="btn btn-warning">Modificar</button>
+      <button class="btn btn-primary" (click)="updateProfile()">Guardar Cambios</button>
+      <button class="btn btn-secondary" (click)="btnCancelar()">Cancelar</button>
+      <button class="btn btn-warning" (click)="habilitarEdicion()">Modificar</button>
     </div>
 
-    <!-- Datos del Usuario -->
-    <form>
+    
+    <form [formGroup]="perfilForm">
       <div class="row mb-3">
         <div class="col-md-4">
           <label for="nombre" class="form-label">Nombre:</label>
         </div>
         <div class="col-md-8">
-          <input type="text" class="form-control" id="nombre" value="Juan Pérez">
+          <input type="text" class="form-control" id="nombre" formControlName="name">
         </div>
       </div>
 
@@ -24,7 +24,7 @@
           <label for="dni" class="form-label">DNI:</label>
         </div>
         <div class="col-md-8">
-          <input type="text" class="form-control" id="dni" value="12345678A">
+          <input type="text" class="form-control" id="dni" formControlName="dni">
         </div>
       </div>
 
@@ -33,7 +33,7 @@
           <label for="telefono" class="form-label">Teléfono:</label>
         </div>
         <div class="col-md-8">
-          <input type="tel" class="form-control" id="telefono" value="+34 600 123 456">
+          <input type="tel" class="form-control" id="telefono" formControlName="telephone">
         </div>
       </div>
 
@@ -42,19 +42,20 @@
           <label for="correo" class="form-label">Correo:</label>
         </div>
         <div class="col-md-8">
-          <input type="email" class="form-control" id="correo" value="juan@example.com">
+          <input type="email" class="form-control" id="correo" formControlName="email">
         </div>
       </div>
 
       <div class="row">
-      <div class="col-md-4"><label class="form-label">Rol:</label></div>
-      <div class="col-md-8">
-        <select class="form-select" formControlName="rol">
-          <option>Admin</option>
-          <option>Tecnico</option>
-          <option>Cliente</option>
-        </select>
+        <div class="col-md-4">
+          <label class="form-label">Rol:</label>
+        </div>
+        <div class="col-md-8">
+          <select class="form-select" formControlName="level">
+            <option [value]="3">Admin</option>
+            <option [value]="1">Tecnico</option>
+          </select>
+        </div>
       </div>
-    </div>
     </form>
   </div>
