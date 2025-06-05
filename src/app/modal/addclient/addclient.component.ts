@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit, input, Input} from '@angular/c
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Client } from '../../../model/clients';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-addclient',
   standalone: false,
@@ -15,7 +16,8 @@ export class AddclientComponent implements OnInit {
 
   constructor(
     private apiserve: ApiSpringbootService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toats: MatSnackBar
   ){
 
   }
@@ -62,10 +64,22 @@ export class AddclientComponent implements OnInit {
     this.apiserve.addClient(dataclient).subscribe({
       next: (response) => {
         console.log('Cliente guardado:', response);
+        this.toats.open('Cliente guardado correctamente', 'Cerrar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['success-snackbar']
+        });
         window.location.reload();
         this.close(); 
       },
       error: (err) => {
+        this.toats.open('Error al guardar cliente', 'Cerrar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['error-snackbar']
+        });
         console.error('Error al guardar cliente:', err);
       }
     });
@@ -73,11 +87,23 @@ export class AddclientComponent implements OnInit {
       // Actualiza Cliente
       this.apiserve.updateClient(this.updateclient.id! , dataclient).subscribe({
         next: (response) => {
+          this.toats.open('Cliente actualizado correctamente', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['success-snackbar']
+          });
           console.log('Cliente actualizado:', response);
           window.location.reload();
           this.close(); 
         },
         error: (err) => {
+          this.toats.open('Error al actualizar cliente', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['error-snackbar']
+          });
           console.error('Error al actualizar cliente:', err);
         }
       });

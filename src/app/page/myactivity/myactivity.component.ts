@@ -3,6 +3,7 @@ import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { User } from '../../../model/user';
 import { Activity } from '../../../model/activity';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-myactivity',
   standalone: false,
@@ -15,11 +16,13 @@ export class MyactivityComponent implements OnInit {
   updateactivity: Activity | null = null;
   showModal = false;
   showReassing = false;
+   filterText: string = '';
 
 
   constructor(
     private apiserve: ApiSpringbootService,
-    private router: Router
+    private router: Router,
+    private toats: MatSnackBar
   ){
     const user = localStorage.getItem('User');
     if(user !== null){
@@ -39,6 +42,17 @@ export class MyactivityComponent implements OnInit {
       this.activis = data.activities;
     });
   }
+  // Metodo para filtrar actividades
+    get filteredClients(): Activity[] {
+  if (!this.filterText.trim()) {
+    return this.activis;
+  }
+
+  const search = this.filterText.toLowerCase();
+  return this.activis.filter(activis =>
+    activis.name!.toLowerCase().includes(search)
+  );
+}
 
    // Metodo para actualizar el estado de la actividad
   btnUpdateState(activity :Activity, update?:number) {
@@ -144,5 +158,9 @@ export class MyactivityComponent implements OnInit {
         console.error('Error al eliminar la actividad:', error);
       }
     });
+  }
+    // Metodo para accerder a la actividad
+  btnShowActivity(activity: Activity) {
+    this.router.navigate(['/home/show_activity', activity.id]);
   }
 }

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { Center } from '../../../model/center';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addcenter',
@@ -17,7 +18,8 @@ export class AddcenterComponent implements OnInit {
 
   constructor(
     private apiservice: ApiSpringbootService,
-    private formbuilder: FormBuilder
+    private formbuilder: FormBuilder,
+    private toats: MatSnackBar
   ){
     
   }
@@ -68,21 +70,45 @@ export class AddcenterComponent implements OnInit {
     this.apiservice.addCenter(this.id_client, dataCenter).subscribe({
     next: (response) => {
       console.log('Centro guardado:', response);
+      this.toats.open('Centro guardado correctamente', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['success-snackbar']
+      });
       window.location.reload();
       this.close(); 
     },
     error: (err) => {
+      this.toats.open('Error al guardar centro', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['error-snackbar']
+      });
       console.error('Error al guardar Centro:', err);
     }
   });
   }else{
     this.apiservice.updateCenter(this.updatecenter.id, dataCenter).subscribe({
       next: (response) => {
+        this.toats.open('Centro actualizado correctamente', 'Cerrar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['success-snackbar']
+        });
         console.log('Centro actualizado:', response);
         window.location.reload();
         this.close(); 
       },
       error: (err) => {
+        this.toats.open('Error al actualizar centro', 'Cerrar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['error-snackbar']
+        });
         console.error('Error al actualizar Centro:', err);
       }
     });

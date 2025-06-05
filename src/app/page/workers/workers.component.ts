@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../model/user';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-workers',
@@ -13,9 +14,11 @@ export class WorkersComponent implements OnInit{
   users: User [] = [];
   userupdate: User | null = null;
   showModal = false;
+  filterText: string = '';
 
   constructor(
-    private apiserve: ApiSpringbootService
+    private apiserve: ApiSpringbootService,
+    private toats: MatSnackBar
   ){
     const userSesion = localStorage.getItem('User');
     if (userSesion) {
@@ -36,6 +39,16 @@ export class WorkersComponent implements OnInit{
       }
     );
   }
+  get filteredClients(): User[] {
+  if (!this.filterText.trim()) {
+    return this.users;
+  }
+
+  const search = this.filterText.toLowerCase();
+  return this.users.filter(user =>
+    user.name.toLowerCase().includes(search)
+  );
+}
   // Metodo para cerrar el modal y limpiar la variable updateuser
   handleClose() {
     this.showModal = false;

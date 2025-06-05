@@ -5,6 +5,7 @@ import { Center } from '../../../model/center';
 import { Activity } from '../../../model/activity';
 import { User } from '../../../model/user';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-activity',
@@ -20,10 +21,12 @@ export class ActivityComponent implements OnInit {
   updateactivity: Activity | null = null;
   showModal = false;
   showModalReassing = false;
+  filterText: string = '';
 
   constructor(
   private apiserve: ApiSpringbootService,
-  private router: Router
+  private router: Router,
+  private toats: MatSnackBar,
   ){
     const userm = localStorage.getItem('User');
     const clientm = localStorage.getItem('Client');
@@ -45,6 +48,18 @@ export class ActivityComponent implements OnInit {
     this.apiserve.getActivitybyCenter(id_center).subscribe(actividata=>{
       this.activity = actividata.activity;
     });
+  }
+
+  // Metodo para filtrar actividades
+  get filteredClients(): Activity[] {
+  if (!this.filterText.trim()) {
+    return this.activity;
+  }
+
+  const search = this.filterText.toLowerCase();
+  return this.activity.filter(acti =>
+    acti.name!.toLowerCase().includes(search)
+  );
   }
 
   // Metodo para abrir modal para añadir actividad
@@ -77,11 +92,25 @@ export class ActivityComponent implements OnInit {
     const state = activity.archive == 1 ? 0 : 1;
     this.apiserve.archiveActivity(activity.id!, state).subscribe({
       next: (response) => {
+        this.toats.open('¡Accion de archivado con exito!', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+         // Actualizar la lista de actividades después de archivar
         console.log('Actividad archivada:', response);
         this.getActivitybyCenter(this.center.id); 
       },
       error: (error) => {
-        console.error('Error al archivar la actividad:', error);
+        this.toats.open('Error de accion de archivado', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+         // Manejo de errores al archivar
+         console.error('Error al archivar la actividad:', error);
       }
     });
   }
@@ -89,10 +118,24 @@ export class ActivityComponent implements OnInit {
   deleteActivity(activity: Activity) {
     this.apiserve.deleteActivity(activity.id!).subscribe({
       next: (response) => {
+        this.toats.open('¡Actividad eliminada correctamente!', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      
         console.log('Actividad eliminada:', response);
         this.getActivitybyCenter(this.center.id); 
       },
       error: (error) => {
+        this.toats.open('Error al eliminar la actividad', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+         // Manejo de errores al eliminar
         console.error('Error al eliminar la actividad:', error);
       }
     });

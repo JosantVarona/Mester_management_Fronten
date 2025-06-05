@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../model/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Activity } from '../../../model/activity';
+import { get } from 'http';
 
 @Component({
   selector: 'app-adduser',
@@ -12,11 +15,15 @@ import { User } from '../../../model/user';
 export class AdduserComponent implements OnInit {
   @Output() onClose = new EventEmitter<void>();
   @Input() updateuser: User| null = null;
+  activiUser: Activity[] = [];
   formuser!: FormGroup;
+  filtroNombre: string = '';
+  filtroEstado: string = '';
 
   constructor(
     private apiserve: ApiSpringbootService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toats: MatSnackBar
   ){
 
   }
@@ -32,6 +39,7 @@ export class AdduserComponent implements OnInit {
     });
 
     if (this.updateuser) {
+      this.getActivities(this.updateuser.id!);
       // Si hay un usuario para actualizar, precargar los datos en el formulario
       this.formuser.patchValue({
         name: this.updateuser.name,
@@ -46,12 +54,19 @@ export class AdduserComponent implements OnInit {
   }
  close() {
     if (this.formuser) {
-      this.formuser.reset(); // Limpia todos los campos
+      this.formuser.reset(); 
     }
     this.updateuser = null;
     this.onClose.emit();
     
   }
+
+    getActivities(id: number) {
+    this.apiserve.getUserbyId(id).subscribe( data => {
+      this.activiUser = data.activities;
+    });
+  }
+
 // Habilitar todos los campos del formulario para edición
   habilitarEdicion(){
   
@@ -75,16 +90,39 @@ export class AdduserComponent implements OnInit {
         // Actualizar usuario existente
         this.apiserve.UpdateUser(this.updateuser.id!, user).subscribe(
           () => {
+            this.toats.open('Usuario actualizado correctamente', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: ['success-snackbar']
+            });
             console.log('Usuario actualizado correctamente');
             window.location.reload(); // Recargar la página para reflejar los cambios
             this.close();
           },
           error => {
+            this.toats.open('Error al actualizar el usuario', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: ['error-snackbar']
+            });
             console.error('Error al actualizar el usuario:', error);
           }
         );
       }
     }
+  }
+    // 🔍 Filtro dinámico aplicado en el HTML
+  getFilteredActivities(): Activity[] {
+    const nombre = this.filtroNombre.toLowerCase();
+    const estado = this.filtroEstado.toLowerCase();
+
+    return this.activiUser.filter(act => {
+      const matchNombre = act.name!.toLowerCase().includes(nombre);
+      const matchEstado = estado ? act.state!.toLowerCase() === estado : true;
+      return matchNombre && matchEstado;
+    });
   }
 
 }

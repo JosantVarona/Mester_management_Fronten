@@ -3,6 +3,7 @@ import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Activity } from '../../../model/activity';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-info-activity',
@@ -22,7 +23,8 @@ export class InfoActivityComponent implements OnInit {
   constructor(private apiserve: ApiSpringbootService,
   private router: ActivatedRoute ,
   private router2: Router,
-  private formbuilder: FormBuilder
+  private formbuilder: FormBuilder,
+  private toats: MatSnackBar
   ) {
 
   }

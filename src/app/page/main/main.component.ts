@@ -3,6 +3,7 @@ import { Client } from '../../../model/clients';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { Router } from '@angular/router';
 import { User } from '../../../model/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-main',
@@ -15,10 +16,12 @@ export class MainComponent implements OnInit {
   updateclient: Client | null = null;
   clients: Client [] = [];
   showModal = false;
+  filterText: string = '';
 
   constructor(
     private apiserve: ApiSpringbootService,
-    private router: Router
+    private router: Router,
+    private toats: MatSnackBar,
   ){
     const userSesion = localStorage.getItem('User');
     if (userSesion) {
@@ -40,6 +43,18 @@ export class MainComponent implements OnInit {
       data =>{this.clients = data}
     )
   }
+
+  get filteredClients(): Client[] {
+  if (!this.filterText.trim()) {
+    return this.clients;
+  }
+
+  const search = this.filterText.toLowerCase();
+  return this.clients.filter(client =>
+    client.name.toLowerCase().includes(search)
+  );
+}
+
   // Metodo para accerder al cliente 
   btnClient(client: Client){
     localStorage.setItem('Client', JSON.stringify(client));
@@ -60,9 +75,21 @@ export class MainComponent implements OnInit {
     const state = client.archive == 1 ? 0 : 1; 
     this.apiserve.archiveClient(client.id, state).subscribe(
       () => {
+        this.toats.open('¡Operación completada correctamente! ', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'center',   
+            verticalPosition: 'top' 
+          });
         this.getAllclients();
       },
       error => {
+        this.toats.open('La acción no se ha podido realizar.  ', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',   
+            verticalPosition: 'top' 
+          });
         console.error('Error al archivar el cliente:', error);
       }
     );
@@ -71,9 +98,21 @@ export class MainComponent implements OnInit {
   btnDeleteClient(client: Client): void {
     this.apiserve.deleteClient(client.id).subscribe(
       () => {
+        this.toats.open('¡Cliente eliminado correctamente! ', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'center',   
+            verticalPosition: 'top' 
+          });
         this.getAllclients();
       },
       error => {
+        this.toats.open('No se ha podido eliminar el cliente.  ', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',   
+            verticalPosition: 'top' 
+          });
         console.error('Error al eliminar el cliente:', error);
       }
     );

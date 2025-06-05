@@ -20,11 +20,13 @@ import { AddcenterComponent } from './modal/addcenter/addcenter.component';
 import { AdduserComponent } from './modal/adduser/adduser.component';
 import { CenterComponent } from './page/center/center.component';
 import { ActivityComponent } from './page/activity/activity.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { InfoActivityComponent } from './page/info-activity/info-activity.component';
 import { VerActivityComponent } from './page/ver-activity/ver-activity.component';
 import { ReassingComponent } from './modal/reassing/reassing.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Error404Component } from './page/error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { ReassingComponent } from './modal/reassing/reassing.component';
     InfoActivityComponent,
     VerActivityComponent,
     ReassingComponent,
+    Error404Component,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,9 @@ import { ReassingComponent } from './modal/reassing/reassing.component';
     MatButtonModule,
     MatListModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    FormsModule,
   ],
   providers: [
     provideClientHydration(withEventReplay())

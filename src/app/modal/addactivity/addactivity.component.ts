@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { Activity } from '../../../model/activity';
 import { User } from '../../../model/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addactivity',
@@ -19,7 +20,8 @@ export class AddactivityComponent implements OnInit {
 
   constructor(
     private apiserve: ApiSpringbootService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toats: MatSnackBar
   ){
     // Obtener el usuario desde el localStorage
     const userData = localStorage.getItem('User');
@@ -79,10 +81,22 @@ export class AddactivityComponent implements OnInit {
       this.apiserve.addActivity(this.id_center, this.user.id! ,activity).subscribe({
         next: (response) => {
           console.log('Actividad guardada:', response);
+          this.toats.open('Actividad guardada correctamente', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['success-snackbar']
+          });
           window.location.reload();
           this.close();
         },
         error: (err) => {
+          this.toats.open('Error al guardar actividad', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['error-snackbar']
+          });
           console.error('Error al guardar actividad:', err);
         }
       });
@@ -96,11 +110,23 @@ export class AddactivityComponent implements OnInit {
 
       this.apiserve.updateActivity(this.updateactivity.id!, updatedActivity).subscribe({
         next: (response) => {
+          this.toats.open('Actividad actualizada correctamente', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['success-snackbar']
+          });
           console.log('Actividad actualizada:', response);
           window.location.reload();
           this.close();
         },
         error: (err) => {
+          this.toats.open('Error al actualizar actividad', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['error-snackbar']
+          });
           console.error('Error al actualizar actividad:', err);
         }
       });

@@ -16,7 +16,7 @@
     <h3 class="text-center mb-3" style="color: white;">Actividades</h3>
     <div class="row justify-content-center mb-3">
         <div class="col-12 col-md-6 d-flex">
-            <input type="text" class="form-control me-2" placeholder="Buscar actividad...">
+            <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterText" name="filter">
             <button class="btn btn-primary" (click)="showModal = true">Añadir</button>
 
              <app-addactivity *ngIf="showModal" [id_center]="center.id" [updateactivity]="updateactivity"  (onClose)="handleClose()"></app-addactivity>
@@ -37,11 +37,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let acti of activity">
+                <tr *ngFor="let acti of filteredClients; let i = index;">
                     <td>{{acti.name}}</td>
                     <td>{{acti.type}}</td>
                     <td>{{acti.fecha_acti}}</td>
-                    <td>{{acti.state}}<span class="badge bg-danger text-white"  *ngIf="acti.archive == 1"> Archivado</span> </td>
+                    <td>{{acti.state}}<span class="badge bg-danger text-white"  *ngIf="acti.archive == 1"> Archivado</span> 
+                    <span class="badge bg-danger text-white"  *ngIf="acti.picture == null && acti.specifics == null"> Incompleto</span> </td>
                     <td>
                         <button class="btn btn-sm btn-warning me-2" *ngIf="user.level == 3" (click)="btnUpdateActivity(acti)">Editar</button>
                         <!-- Aqui tendremos que mandarlo a fomulario de actividades -->

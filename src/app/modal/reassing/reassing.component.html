@@ -1,7 +1,7 @@
 <div class="modal-backdrop" (click)="close()"></div>
 <div class="modal-content">
   <div class="mb-4 text-center">
-    <input type="text" class="form-control mb-2 w-75 mx-auto" placeholder="Buscar usuario...">
+    <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterText" name="filter">
     <button class="btn btn-primary me-2" (click)="reassingActivity()" [disabled]="!selectedUser">Añadir</button>
     <button class="btn btn-secondary " (click)="close()">Cerrar</button>
   </div>
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users">
+                <tr *ngFor="let user of filteredClients; let i = index;">
                 <td>{{ user.name }}</td>
                 <td>{{ user.state }}</td>
                 <td>

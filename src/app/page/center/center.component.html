@@ -12,7 +12,7 @@
     <!-- Search and Add -->
     <div class="row mb-4 g-2">
       <div class="col-sm-9 col-12">
-        <input type="text" class="form-control" placeholder="Buscar...">
+        <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterText" name="filter">
       </div>
       <div class="col-sm-3 col-12">
         <button class="btn btn-primary" (click)="btnAddCenter()">Añadir</button>
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let center of centers">
+          <tr *ngFor="let center of filteredClients; let i = index;">
             <td>{{center.address}}</td>
             <td>{{center.zipCode}}</td>
             <td>{{center.location}}</td>
