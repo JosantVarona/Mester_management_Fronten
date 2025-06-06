@@ -47,15 +47,32 @@ export class AddclientComponent implements OnInit {
     }
   saveClient() {
     if (this.form.value.name == "") {
+      this.toats.open('Nombre vacío', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['error-snackbar']
+      });
       console.log('Nombre vacío');
       return;
     }
     if (this.form.value.cif == "") {
-      console.log('CIF vacío');
+      this.toats.open('CIF vacío', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['error-snackbar']
+      });
       return;
     }
     if (this.form.value.email == "") {
-      console.log('Email vacío');
+      this.toats.open('Email vacío', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['error-snackbar']
+      });
+
       return;
     }
     const dataclient = this.form.value;

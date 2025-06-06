@@ -78,17 +78,51 @@ export class AdduserComponent implements OnInit {
   }
   updateUser() {
     if (this.formuser.valid) {
-      const user: User = {
-        name: this.formuser.get('name')?.value,
-        dni: this.formuser.get('dni')?.value,
-        email: this.formuser.get('email')?.value,
-        telephone: this.formuser.get('telephone')?.value,
-        level: this.formuser.get('level')?.value
-      };
+const form = this.formuser;
+
+  const name = form.get('name')?.value.trim();
+  const dni = form.get('dni')?.value.trim();
+  const email = form.get('email')?.value.trim();
+  const telephone = form.get('telephone')?.value.trim();
+  const level = form.get('level')?.value;
+
+  const namePattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+  const emailPattern = /^[\w.-]+@(gmail|hotmail)\.com$/;
+
+  // Validaciones
+  if (!name || !namePattern.test(name)) {
+    this.toats.open('Nombre inválido. Solo letras y espacios.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+
+
+  if (!email || !emailPattern.test(email)) {
+    this.toats.open('Email inválido. Solo se permite gmail.com o hotmail.com.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+  if (!telephone ) {
+    this.toats.open('Teléfono inválido. Debe tener entre 7 y 15 dígitos.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+  if (!dni || dni.trim().length === 0 ) {
+    this.toats.open('El DNI es obligatorio.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+  
+
+
+  const updatedUser: User = {
+    name,
+    dni,
+    email,
+    telephone,
+    level,
+    pass: this.updateuser?.pass 
+  };
 
       if (this.updateuser) {
         // Actualizar usuario existente
-        this.apiserve.UpdateUser(this.updateuser.id!, user).subscribe(
+        this.apiserve.UpdateUser(this.updateuser.id!, updatedUser).subscribe(
           () => {
             this.toats.open('Usuario actualizado correctamente', 'Cerrar', {
               duration: 3000,

@@ -50,18 +50,42 @@ export class AddcenterComponent implements OnInit {
   saveCenter(){
     console.log(this.id_client)
     if (this.form.value.location == "") {
+    this.toats.open('Tiene que poner donde se encuentra el centro', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['error-snackbar']
+    });
     console.log('Tiene que poner donde se encuentra el centro');
     return;
   }
   if (this.form.value.telephone == "") {
+    this.toats.open('Tiene que introducir un numero de telefono', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['error-snackbar']
+    });
     console.log('Tiene que introducir numero');
     return;
   }
   if (this.form.value.zipCode == "") {
+    this.toats.open('Codigo postal esta vacío', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['error-snackbar']
+    });
     console.log('Codigo postal esta vacío');
     return;
   }
   if (this.form.value.address == "") {
+    this.toats.open('Domiciolo vacio', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['error-snackbar']
+    });
     console.log('Domiciolo vacio');
     return;
   }

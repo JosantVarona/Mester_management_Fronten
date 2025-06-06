@@ -58,10 +58,22 @@ export class AddactivityComponent implements OnInit {
 
     // Validación de campos obligatorios
     if (!name || name.trim() === '') {
+      this.toats.open('Nombre vacío', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['error-snackbar']
+      });
       console.log('Nombre vacío');
       return;
     }
     if (!type || type.trim() === '') {
+      this.toats.open('Tipo vacío', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['error-snackbar']
+      });
       console.log('Tipo vacío');
       return;
     }

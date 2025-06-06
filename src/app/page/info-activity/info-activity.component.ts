@@ -96,10 +96,22 @@ guardarCambios() {
 private enviarDatosAlServidor(activityData: any) {
   this.apiserve.updateImageActivity(this.id_activity, activityData).subscribe({
     next: (response) => {
+      this.toats.open('Actividad actualizada con éxito', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['mat-toolbar', 'mat-primary']
+      });
       console.log('Actividad actualizada con éxito:', response);
-      this.router2.navigate(['/home/center_activity']);
+      window.history.back()
     },
     error: (error) => {
+      this.toats.open('Error al actualizar la actividad', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
       console.error('Error al actualizar la actividad:', error);
     }
   });

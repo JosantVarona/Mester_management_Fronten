@@ -22,6 +22,7 @@ export class ActivityComponent implements OnInit {
   showModal = false;
   showModalReassing = false;
   filterText: string = '';
+  isDisabled = false;
 
   constructor(
   private apiserve: ApiSpringbootService,
@@ -147,5 +148,37 @@ export class ActivityComponent implements OnInit {
   // Metodo para accerder a la actividad
   btnShowActivity(activity: Activity) {
     this.router.navigate(['/home/show_activity', activity.id]);
+  }
+
+  // Metodo para Generar el PDF de la actividad
+  async btnGeneratePDF(activity: Activity) {
+    this.isDisabled = true; 
+          this.toats.open('Generando PDF...', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
+
+    // Llamamos al servicio para traernos la información de la actividad
+    try {
+      const activityData = await this.apiserve.getAllinfoActivity(activity.id!).toPromise();
+  
+      const pdfBlob = await this.apiserve.generateReportActivity(activityData);
+      const blobUrl = new Blob([pdfBlob], { type: 'application/pdf' });
+      const link = window.URL.createObjectURL(blobUrl);
+      window.open(link);
+    }
+    catch(error) {
+      console.error('Error al generar el PDF:', error);
+      this.toats.open('Error al generar el PDF', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
+    }finally {
+      this.isDisabled = false; // Volver a habilitar el botón
+    }
   }
 }

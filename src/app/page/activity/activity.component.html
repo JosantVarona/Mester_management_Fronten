@@ -46,7 +46,8 @@
                     <td>
                         <button class="btn btn-sm btn-warning me-2" *ngIf="user.level == 3" (click)="btnUpdateActivity(acti)">Editar</button>
                         <!-- Aqui tendremos que mandarlo a fomulario de actividades -->
-                        <button class="btn btn-primary btn-sm me-2" *ngIf="acti.state == 'Finalizada' && acti.archive == 0" (click)="btnShowActivity(acti)">Ver</button>
+                        <button class="btn btn-primary btn-sm me-2" *ngIf="acti.archive == 0" (click)="btnShowActivity(acti)">Ver</button>
+                        <button class="btn btn-primary btn-sm me-2" *ngIf="acti.state == 'Finalizada' && acti.archive == 0" [disabled]="isDisabled" (click)="btnGeneratePDF(acti)">PDF</button>
 
                         <button class="btn btn-sm btn-primary  me-2" *ngIf="user.level == 3" (click)="btnReassingActivity(acti)">Reasignar</button>
 

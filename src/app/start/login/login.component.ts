@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../../../model/user';
 import { AuthGuard } from '../../service/auth.guard';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -50,6 +51,12 @@ export class LoginComponent implements OnInit {
         next: (userDB:User) => {
           if (userDB && userDB.pass == pass) {
             if (userDB.state != 'Desabilitado') {
+              this.toats.open('Usuario autenticado', 'Cerrar', {
+                duration: 3000,
+                panelClass: ['success-snackbar'],
+                horizontalPosition: 'center',   
+                verticalPosition: 'top' 
+              });
               localStorage.setItem('User', JSON.stringify(userDB));
               this.router.navigate(['/home']); 
               console.log('Usuario autenticado');
@@ -86,5 +93,37 @@ export class LoginComponent implements OnInit {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+
+ recoverPassword() {
+  const email = this.form.value.email;
+  if (email) {
+    this.apiserve.recoverPassword(email)
+      .then(response => {
+        this.toats.open('Se ha enviado un enlace de recuperación a tu correo. Esto puede tomar unos momentos', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      })
+      .catch(error => {
+        console.error('Error al enviar el enlace de recuperación:', error);
+        this.toats.open('Error al enviar el enlace de recuperación', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      });
+  } else {
+    this.toats.open('Por favor, ingresa tu correo electrónico', 'Cerrar', {
+      duration: 3000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
+  }
+}
+
 
 }

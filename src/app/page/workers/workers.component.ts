@@ -71,6 +71,29 @@ export class WorkersComponent implements OnInit{
       }
     );
   }
+  // Metodo para eliminar un usuario
+  btndeleteUser(user: User): void {
+    this.apiserve.deleteUser(user.id!).subscribe(
+      () => {
+        this.users = this.users.filter(u => u.id !== user.id);
+        this.toats.open('Usuario eliminado correctamente', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      },
+      error => {
+        console.error('Error al eliminar el usuario: ', error);
+        this.toats.open('Error al eliminar el usuario(Puede tener actividades)', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      }
+    );
+  }
 
 
 }

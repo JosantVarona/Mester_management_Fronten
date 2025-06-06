@@ -17,6 +17,7 @@ export class MyactivityComponent implements OnInit {
   showModal = false;
   showReassing = false;
    filterText: string = '';
+  isDisabled = false; 
 
 
   constructor(
@@ -162,5 +163,37 @@ export class MyactivityComponent implements OnInit {
     // Metodo para accerder a la actividad
   btnShowActivity(activity: Activity) {
     this.router.navigate(['/home/show_activity', activity.id]);
+  }
+  async btnGeneratePDF(activity: Activity) {
+      this.toats.open('Generando PDF...', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
+    this.isDisabled = true; 
+
+    // Llamamos al servicio para traernos la información de la actividad
+    try {
+      const activityData = await this.apiserve.getAllinfoActivity(activity.id!).toPromise();
+  
+      const pdfBlob = await this.apiserve.generateReportActivity(activityData);
+
+      const blobUrl = new Blob([pdfBlob], { type: 'application/pdf' });
+      const link = window.URL.createObjectURL(blobUrl);
+      window.open(link);
+    }
+    catch(error) {
+      console.error('Error al generar el PDF:', error);
+      this.toats.open('Error al generar el PDF', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
+    }finally {
+      this.isDisabled = false; // Volver a habilitar el botón
+    }
+    
   }
 }

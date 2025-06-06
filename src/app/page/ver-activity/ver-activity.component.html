@@ -81,7 +81,8 @@
   </div>
 
   <!-- Imagen con botón para ampliar -->
-  <div class="text-center my-4">
+<div class="text-center my-4">
+  <ng-container *ngIf="info_activity.imagen; else noImage">
     <img
       [src]="info_activity.imagen"
       alt="Imagen"
@@ -89,7 +90,11 @@
       style="max-width: 300px; cursor: pointer;"
       (click)="abrirImagen()"
     />
-  </div>
+  </ng-container>
+  <ng-template #noImage>
+    <p class="text-muted">No hay imagen disponible.</p>
+  </ng-template>
+</div>
 
   <!-- Modal personalizado Angular -->
   <div

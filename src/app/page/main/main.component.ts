@@ -39,7 +39,7 @@ export class MainComponent implements OnInit {
   }
   // Metodo para obtener todos los clientes
   getAllclients(){
-    this.apiserve.getAllClients().subscribe(
+    this.apiserve.getAllClients(this.user.level!).subscribe(
       data =>{this.clients = data}
     )
   }

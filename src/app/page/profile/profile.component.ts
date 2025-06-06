@@ -70,7 +70,6 @@ updateProfile() {
 
   const namePattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
   const emailPattern = /^[\w.-]+@(gmail|hotmail)\.com$/;
-  const telephonePattern = /^\d{7,15}$/;
 
   // Validaciones
   if (!name || !namePattern.test(name)) {
@@ -84,15 +83,19 @@ updateProfile() {
     return;
   }
 
-  if (!telephone || !telephonePattern.test(telephone)) {
+  if (!telephone || telephone.trim() == "") {
     this.toats.open('Teléfono inválido. Debe tener entre 7 y 15 dígitos.', 'Cerrar', { duration: 3000 });
     return;
   }
 
-  if (!pass) {
+  if (!pass || pass.trim() == '') {
     this.toats.open('Contraseña obligatoria.', 'Cerrar', { duration: 3000 });
     return;
   }
+  if (!dni || dni.trim().length === 0 ) {
+  this.toats.open('El DNI es obligatorio.', 'Cerrar', { duration: 3000 });
+  return;
+}
 
   const updatedUser: User = {
     id: this.user.id,

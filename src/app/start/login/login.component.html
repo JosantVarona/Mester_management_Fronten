@@ -12,13 +12,13 @@
         <input class="input" [type]="showPassword ? 'text' : 'password'" formControlName="pass" placeholder="" required>
         <span>Constaseña</span>
         <button type="button" (click)="togglePasswordVisibility()" style="position: absolute; right: 10px; top: 10px; background: none; border: none; cursor: pointer;">
-        👁️
+        <mat-icon>visibility</mat-icon>
       </button>
     </label>
     
     <button class="submit" (click)="loginUser()">Iniciar</button>
     <p class="signin">No tengo cuenta <a routerLink="/register">registrate</a> </p>
-    <p class="signin">He <a>Olvidado la Contraseña</a> </p>
+    <p class="signin">He <a (click)="recoverPassword()">Olvidado la Contraseña</a> </p>
 </form>
 </div>
 

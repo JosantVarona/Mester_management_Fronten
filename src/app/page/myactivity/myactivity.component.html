@@ -33,10 +33,12 @@
           <td>
             <button class="btn btn-primary btn-sm me-2" *ngIf="activity.state != 'Finalizada'" (click)="btnActivity(activity)">Acceder</button>
             <button class="btn btn-primary btn-sm me-2" *ngIf="activity.state == 'Finalizada' && activity.archive == 0" (click)="btnShowActivity(activity)">Ver</button>
+            <button class="btn btn-primary btn-sm me-2" *ngIf="activity.state == 'Finalizada' && activity.archive == 0" [disabled]="isDisabled" (click)="btnGeneratePDF(activity)">PDF</button>
+            
             <button class="btn btn-sm btn-primary  me-2" *ngIf="user.level == 3" (click)="btnReassingActivity(activity)">Reasignar</button>
             <button class="btn btn-sm btn-warning me-2"  (click)="btnUpdateActivity(activity)">Editar</button>
             <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'Pendiente'" (click)="btnUpdateState(activity)">En Curso</button>
-            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'" (click)="btnUpdateState(activity, 0)">Pendiente</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso' && (activity.specifics == null || activity.picture == null)" (click)="btnUpdateState(activity, 0)">Pendiente</button>
             <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'&& activity.picture != null && activity.specifics != null" (click)="btnUpdateState(activity, 1)">Finalizado</button>
             <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'Finalizada'" (click)="btnUpdateState(activity)">Volver en curso</button>
             <button class="btn btn-sm btn-secondary me-2" *ngIf="activity.archive == 0" (click)="archiveActivity(activity)">Archivar</button>
