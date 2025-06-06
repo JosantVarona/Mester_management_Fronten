@@ -2,7 +2,7 @@
   <!-- Fila con input, botón y calendario -->
   <div class="row align-items-start mb-4 g-3">
     <div class="col-12 col-md-4">
-      <input type="text" class="form-control" placeholder="Buscar..." />
+      <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterText" name="filter">
     </div>
   </div>
   <h3 class="text-center mb-3" style="color: white;">Mi actividades</h3>
@@ -18,22 +18,29 @@
         <tr>
           <th>Nombre</th>
           <th>Tipo</th>
+          <th>Fecha</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let activity of activis">
+        <tr *ngFor="let activity of filteredClients; let i = index;">
           <td>{{activity.name}}</td>
           <td>{{activity.type}}</td>
-          <td><span class="badge bg-success">{{activity.state}}</span> <span class="badge bg-danger text-white"  *ngIf="activity.archive == 1"> Archivado</span></td>
+          <td>{{activity.fecha_acti | date: 'dd/MM/yyyy'}}</td>
+          <td><span class="badge bg-success">{{activity.state}}</span> <span class="badge bg-danger text-white"  *ngIf="activity.archive == 1"> Archivado</span>
+          <span class="badge bg-danger text-white"  *ngIf="activity.picture == null && activity.specifics == null"> Incompleto</span></td>
           <td>
-            <button class="btn btn-primary btn-sm me-2" (click)="btnActivity(activity)">Acceder</button>
+            <button class="btn btn-primary btn-sm me-2" *ngIf="activity.state != 'Finalizada'" (click)="btnActivity(activity)">Acceder</button>
+            <button class="btn btn-primary btn-sm me-2" *ngIf="activity.state == 'Finalizada' && activity.archive == 0" (click)="btnShowActivity(activity)">Ver</button>
+            <button class="btn btn-primary btn-sm me-2" *ngIf="activity.state == 'Finalizada' && activity.archive == 0" [disabled]="isDisabled" (click)="btnGeneratePDF(activity)">PDF</button>
+            
             <button class="btn btn-sm btn-primary  me-2" *ngIf="user.level == 3" (click)="btnReassingActivity(activity)">Reasignar</button>
             <button class="btn btn-sm btn-warning me-2"  (click)="btnUpdateActivity(activity)">Editar</button>
-            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'Pendiente' || activity.state == 'Finalizada'" (click)="btnUpdateState(activity)">En Curso</button>
-            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'" (click)="btnUpdateState(activity, 0)">Pendiente</button>
-            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'" (click)="btnUpdateState(activity, 1)">Finalizado</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'Pendiente'" (click)="btnUpdateState(activity)">En Curso</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso' && (activity.specifics == null || activity.picture == null)" (click)="btnUpdateState(activity, 0)">Pendiente</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'En curso'&& activity.picture != null && activity.specifics != null" (click)="btnUpdateState(activity, 1)">Finalizado</button>
+            <button class="btn btn-sm btn-success me-2" *ngIf="activity.state == 'Finalizada'" (click)="btnUpdateState(activity)">Volver en curso</button>
             <button class="btn btn-sm btn-secondary me-2" *ngIf="activity.archive == 0" (click)="archiveActivity(activity)">Archivar</button>
             <button class="btn btn-sm btn-secondary me-2" *ngIf="activity.archive == 1" (click)="archiveActivity(activity)">Desarchivar</button>
             <button class="btn btn-sm btn-danger" *ngIf="activity.archive == 1 && user.level == 3" (click)="deleteActivity(activity)">Eliminar</button>

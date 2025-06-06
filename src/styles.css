@@ -4,3 +4,23 @@ html, body { height: 100%; }
 body { margin: 0;
      font-family: Roboto, "Helvetica Neue", sans-serif; 
     }
+/* Éxito */
+.success-snackbar {
+  background-color: #09ff00 !important;
+  color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+}
+
+/* Error */
+.error-snackbar {
+  background-color: #ff0000 !important;
+  color: #ffb3b3 !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+}
+

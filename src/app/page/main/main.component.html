@@ -2,7 +2,8 @@
   <!-- Fila con input, botón y calendario -->
   <div class="row align-items-start mb-4 g-3">
     <div class="col-12 col-md-4">
-      <input type="text" class="form-control" placeholder="Buscar..." />
+      <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterText" name="filter">
+
     </div>
     <div class="col-12 col-md-2 d-grid">
       <!-- Botón para mostrar el modal -->
@@ -27,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let client of clients; let i = index;">
+        <tr *ngFor="let client of filteredClients; let i = index;">
           <td>{{ client.name }}</td>
           <td>{{ client.cif }}</td>
           <td>{{ client.email }}</td>

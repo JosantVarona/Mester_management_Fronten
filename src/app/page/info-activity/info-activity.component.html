@@ -36,7 +36,9 @@
   </div><span>Loading</span></div>
 </div>
 <div *ngIf="!loading_info">
+  
     <div class="info-container">
+      <button class="btn btn-secondary btn-back" onclick="window.history.back()">← Volver</button>
   <h2>Detalles de la Actividad</h2>
   
   <div class="info-card">
@@ -51,7 +53,7 @@
 
   <h3>Editar Información</h3>
   <div class="btn-container">
-    <button type="submit" class="btn btn-primary" (click)="guardarCambios()">Guardar cambios</button>
+    <button type="submit" class="btn btn-primary"  (click)="guardarCambios()">Guardar cambios</button>
     <button type="button" class="btn btn-danger" onclick="window.history.back()">Cancelar</button>
   </div>
   <form [formGroup]="form" >

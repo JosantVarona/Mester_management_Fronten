@@ -12,7 +12,7 @@
     <!-- Search and Add -->
     <div class="row mb-4 g-2">
       <div class="col-sm-9 col-12">
-        <input type="text" class="form-control" placeholder="Buscar...">
+        <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterText" name="filter">
       </div>
       <div class="col-sm-3 col-12">
         <button class="btn btn-primary" (click)="btnAddCenter()">Añadir</button>
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let center of centers">
+          <tr *ngFor="let center of filteredClients; let i = index;">
             <td>{{center.address}}</td>
             <td>{{center.zipCode}}</td>
             <td>{{center.location}}</td>
@@ -45,10 +45,10 @@
               <span *ngIf="center.archive == 0" class="badge bg-success text-white">Activo</span>
             </td>
             <td>
-              <button class="btn btn-sm btn-success me-1" (click)="btnAccederCenter(center)">Acceder</button>
-              <button class="btn btn-sm btn-warning me-2" (click)="btnEditCenter(center)" >Editar</button>
-              <button class="btn btn-sm btn-primary me-2"*ngIf="center.archive == 0" (click)="btnArchiveCenter(center)">Archivar</button>
-              <button class="btn btn-sm btn-primary me-2"*ngIf="center.archive == 1" (click)="btnArchiveCenter(center)">Desarchivar</button>
+              <button class="btn btn-sm btn-success me-1"  (click)="btnAccederCenter(center)">Acceder</button>
+              <button class="btn btn-sm btn-warning me-2" *ngIf="user.level == 3" (click)="btnEditCenter(center)" >Editar</button>
+              <button class="btn btn-sm btn-primary me-2"*ngIf="center.archive == 0 && user.level == 3" (click)="btnArchiveCenter(center)">Archivar</button>
+              <button class="btn btn-sm btn-primary me-2"*ngIf="center.archive == 1 && user.level == 3" (click)="btnArchiveCenter(center)">Desarchivar</button>
               <button class="btn btn-sm btn-danger" *ngIf="user.level == 3 && center.archive == 1" (click)="btnDeleteCenter(center)">Eliminar</button>
             </td>
           </tr>

@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../model/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Activity } from '../../../model/activity';
+import { get } from 'http';
 
 @Component({
   selector: 'app-adduser',
@@ -12,11 +15,15 @@ import { User } from '../../../model/user';
 export class AdduserComponent implements OnInit {
   @Output() onClose = new EventEmitter<void>();
   @Input() updateuser: User| null = null;
+  activiUser: Activity[] = [];
   formuser!: FormGroup;
+  filtroNombre: string = '';
+  filtroEstado: string = '';
 
   constructor(
     private apiserve: ApiSpringbootService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toats: MatSnackBar
   ){
 
   }
@@ -32,6 +39,7 @@ export class AdduserComponent implements OnInit {
     });
 
     if (this.updateuser) {
+      this.getActivities(this.updateuser.id!);
       // Si hay un usuario para actualizar, precargar los datos en el formulario
       this.formuser.patchValue({
         name: this.updateuser.name,
@@ -46,12 +54,19 @@ export class AdduserComponent implements OnInit {
   }
  close() {
     if (this.formuser) {
-      this.formuser.reset(); // Limpia todos los campos
+      this.formuser.reset(); 
     }
     this.updateuser = null;
     this.onClose.emit();
     
   }
+
+    getActivities(id: number) {
+    this.apiserve.getUserbyId(id).subscribe( data => {
+      this.activiUser = data.activities;
+    });
+  }
+
 // Habilitar todos los campos del formulario para edición
   habilitarEdicion(){
   
@@ -63,28 +78,85 @@ export class AdduserComponent implements OnInit {
   }
   updateUser() {
     if (this.formuser.valid) {
-      const user: User = {
-        name: this.formuser.get('name')?.value,
-        dni: this.formuser.get('dni')?.value,
-        email: this.formuser.get('email')?.value,
-        telephone: this.formuser.get('telephone')?.value,
-        level: this.formuser.get('level')?.value
-      };
+const form = this.formuser;
+
+  const name = form.get('name')?.value.trim();
+  const dni = form.get('dni')?.value.trim();
+  const email = form.get('email')?.value.trim();
+  const telephone = form.get('telephone')?.value.trim();
+  const level = form.get('level')?.value;
+
+  const namePattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+  const emailPattern = /^[\w.-]+@(gmail|hotmail)\.com$/;
+
+  // Validaciones
+  if (!name || !namePattern.test(name)) {
+    this.toats.open('Nombre inválido. Solo letras y espacios.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+
+
+  if (!email || !emailPattern.test(email)) {
+    this.toats.open('Email inválido. Solo se permite gmail.com o hotmail.com.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+  if (!telephone ) {
+    this.toats.open('Teléfono inválido. Debe tener entre 7 y 15 dígitos.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+  if (!dni || dni.trim().length === 0 ) {
+    this.toats.open('El DNI es obligatorio.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+  
+
+
+  const updatedUser: User = {
+    name,
+    dni,
+    email,
+    telephone,
+    level,
+    pass: this.updateuser?.pass 
+  };
 
       if (this.updateuser) {
         // Actualizar usuario existente
-        this.apiserve.UpdateUser(this.updateuser.id!, user).subscribe(
+        this.apiserve.UpdateUser(this.updateuser.id!, updatedUser).subscribe(
           () => {
+            this.toats.open('Usuario actualizado correctamente', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: ['success-snackbar']
+            });
             console.log('Usuario actualizado correctamente');
             window.location.reload(); // Recargar la página para reflejar los cambios
             this.close();
           },
           error => {
+            this.toats.open('Error al actualizar el usuario', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: ['error-snackbar']
+            });
             console.error('Error al actualizar el usuario:', error);
           }
         );
       }
     }
+  }
+    // 🔍 Filtro dinámico aplicado en el HTML
+  getFilteredActivities(): Activity[] {
+    const nombre = this.filtroNombre.toLowerCase();
+    const estado = this.filtroEstado.toLowerCase();
+
+    return this.activiUser.filter(act => {
+      const matchNombre = act.name!.toLowerCase().includes(nombre);
+      const matchEstado = estado ? act.state!.toLowerCase() === estado : true;
+      return matchNombre && matchEstado;
+    });
   }
 
 }

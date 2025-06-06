@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ver-activity',
@@ -17,7 +18,8 @@ export class VerActivityComponent implements OnInit {
 
   constructor(
   private apiserve: ApiSpringbootService,
-  private router: ActivatedRoute
+  private router: ActivatedRoute,
+  private toats: MatSnackBar
   ) { }
 
   ngOnInit(): void {

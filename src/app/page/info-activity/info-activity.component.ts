@@ -3,6 +3,7 @@ import { ApiSpringbootService } from '../../service/api-springboot.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Activity } from '../../../model/activity';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-info-activity',
@@ -22,7 +23,8 @@ export class InfoActivityComponent implements OnInit {
   constructor(private apiserve: ApiSpringbootService,
   private router: ActivatedRoute ,
   private router2: Router,
-  private formbuilder: FormBuilder
+  private formbuilder: FormBuilder,
+  private toats: MatSnackBar
   ) {
 
   }
@@ -94,10 +96,22 @@ guardarCambios() {
 private enviarDatosAlServidor(activityData: any) {
   this.apiserve.updateImageActivity(this.id_activity, activityData).subscribe({
     next: (response) => {
+      this.toats.open('Actividad actualizada con éxito', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['mat-toolbar', 'mat-primary']
+      });
       console.log('Actividad actualizada con éxito:', response);
-      this.router2.navigate(['/home/center_activity']);
+      window.history.back()
     },
     error: (error) => {
+      this.toats.open('Error al actualizar la actividad', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
       console.error('Error al actualizar la actividad:', error);
     }
   });

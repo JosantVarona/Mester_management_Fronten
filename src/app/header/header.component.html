@@ -4,7 +4,7 @@
       <a (click)="closeSidenav()" routerLink="/home/main" *ngIf="!isInHomeOrMain" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  >Inicio <mat-icon>arrow_back</mat-icon></a>      
       <a (click)="closeSidenav()" routerLink="/home/perfil" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >Mi perfil  <mat-icon>person</mat-icon></a>
       <a (click)="closeSidenav()" routerLink="/home/myactivity" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >Mis actividades <mat-icon>pending_actions</mat-icon></a>
-      <a (click)="closeSidenav()" routerLink="/home/workers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >Gestión de usuario <mat-icon>groups</mat-icon></a>
+      <a (click)="closeSidenav()" *ngIf="user.level == 3" routerLink="/home/workers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >Gestión de usuario <mat-icon>groups</mat-icon></a>
       <a (click)="logout()" >Cerrar sesión <mat-icon>logout</mat-icon></a>
     </nav>
   </mat-sidenav>

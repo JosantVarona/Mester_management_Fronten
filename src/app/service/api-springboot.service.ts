@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { Client } from '../../model/clients';
 import { User } from '../../model/user';
 import { Center } from '../../model/center';
@@ -13,6 +13,8 @@ export class ApiSpringbootService {
 
   URL = "http://localhost:8080"
 
+  jsreport = "http://localhost:5488/api/report";
+
 
 
   constructor(private http: HttpClient) { }
@@ -20,8 +22,8 @@ export class ApiSpringbootService {
   //#region CLIENTES
 
   //Obtenemos todos los clientes
-  public getAllClients(){
-    return this.http.get<any>(`${this.URL}/client`)
+  public getAllClients(level: number){
+    return this.http.get<any>(`${this.URL}/client/bylevel/${level}`)
     .pipe(map(data => {
       return data;
     }));
@@ -112,9 +114,19 @@ export class ApiSpringbootService {
   public UpdateUser(id: number, user: User) {
     return this.http.put<any>(`${this.URL}/user/update_user/${id}`, user);
   }
+  // Metodo para cambiar el estado de un usuario
   public Userstate(id: number, state: String) {
     return this.http.put<any>(`${this.URL}/user/state_user/${id}/${state}`, null);
   }
+
+  // Metodo para recuperar el password del usuario
+public recoverPassword(email: string): Promise<any> {
+  return firstValueFrom(this.http.post(`${this.URL}/user/recuperar/${email}`, null, { responseType: 'text' }));
+}
+public deleteUser(id: number) {
+  return this.http.delete<any>(`${this.URL}/user/delete/${id}`);
+}
+
 
   //#endregion USER
   //#region ACTIVIDAD
@@ -155,6 +167,22 @@ export class ApiSpringbootService {
   }
   public reassingActivity(id: number, id_user: number) {
     return this.http.put<any>(`${this.URL}/activity/reassign/${id}/${id_user}`, null);
+  }
+  // Generar informe de actividad
+  public generateReportActivity(data:any): Promise<Blob> {
+    const requqestbody = {
+      template: { shortid: 'sC95FFfH6' },
+      data: data
+    };
+    return firstValueFrom(
+      this.http.post(this.jsreport, requqestbody, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': 'application/pdf'
+        }),
+        responseType: 'blob' // Esperamos un blob para el PDF
+      })
+    );
   }
 
   //#endregion ACTIVIDAD

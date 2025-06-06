@@ -46,7 +46,16 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="pass" class="form-label">Contraseña:</label>
+        </div>
+      <div class="col-md-8">
+        <input type="password" class="form-control" id="password" formControlName="pass">
+      </div>
+      </div>
+
+      <div class="row" *ngIf="user.level == 3">
         <div class="col-md-4">
           <label class="form-label">Rol:</label>
         </div>
