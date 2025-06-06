@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.form = this.formBuilder.group({
-      email: new FormControl('Manuel@gmail.com'),
-      pass: new FormControl('123')
+      email: new FormControl(''),
+      pass: new FormControl('')
     })
   }
   loginUser() {
